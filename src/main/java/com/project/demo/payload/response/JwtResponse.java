@@ -9,27 +9,14 @@ public class JwtResponse {
 	private String username;
 	private String email;
 	private List<String> authorities;
-	private List<String> collections;
-	private List<String> images;
 
 	public JwtResponse(String accessToken, Long id, String username, String email,
-					   List<String> authorities, List<String> collections, List<String> images) {
+					   List<String> authorities) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.authorities = authorities;
-		this.collections = collections;
-		this.images = images;
-	}
-
-	public List<String> getCollections() {
-		System.out.println(collections);
-		return collections;
-	}
-
-	public List<String> getImages() {
-		return images;
 	}
 
 	public String getAccessToken() {
@@ -73,7 +60,6 @@ public class JwtResponse {
 	}
 
 	public List<String> getAuthorities() {
-		System.out.println(authorities);
 		return authorities;
 	}
 }

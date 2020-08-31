@@ -59,11 +59,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User makeAdmin(long id) {
         User user = userRepository.findById(id).get();
-//        Authority authority = authorityRepository.findByAuthority(AuthorityEnum.ROLE_ADMIN);
-//        authority.setAuthority(AuthorityEnum.ROLE_ADMIN);
-//        Set<Authority> authorities = user.getAuthorities();
-//        authorities.add(authority);
-//        user.setAuthorities(authorities);
+        Set<Authority> authorities = user.getAuthorities();
+        for(Authority authority : authorities){
+            System.out.println(authority);
+            if(authority.getAuthority().equals(AuthorityEnum.ROLE_ADMIN)){
+                break;
+            } else {
+                authorities.add(authorityRepository.findByAuthority(AuthorityEnum.ROLE_ADMIN).get());
+                user.setAuthorities(authorities);
+            }
+        }
         userRepository.save(user);
         return user;
     }

@@ -55,12 +55,6 @@ public class Collection {
         this.items = items;
     }
 
-    public Collection(String name, String imageURL) {
-        this.name = name;
-        this.imageURL = imageURL;
-    }
-
-
     @Override
     public String toString() {
         return "Collection{" +

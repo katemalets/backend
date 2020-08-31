@@ -66,18 +66,12 @@ AuthController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toList());
-		List<String> collections = userDetails.getCollections().stream()
-				.map(Collection::getName)
-				.collect(Collectors.toList());
-		List<String> images = userDetails.getCollections().stream()
-				.map(Collection::getImageURL)
-				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(new JwtResponse(jwt,
 												 userDetails.getId(), 
 												 userDetails.getUsername(), 
 												 userDetails.getEmail(), 
-												 roles,collections,images));
+												 roles));
 	}
 
 	@PostMapping("/signup")
