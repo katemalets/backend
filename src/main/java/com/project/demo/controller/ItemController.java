@@ -3,15 +3,15 @@ package com.project.demo.controller;
 import com.project.demo.entity.Item;
 import com.project.demo.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/items")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ItemController {
 
     @Autowired
@@ -25,5 +25,10 @@ public class ItemController {
     @GetMapping()
     public List<Item> showItems(){
         return itemService.findAll();
+    }
+
+    @GetMapping("/search/findByNameContaining/{name}")
+    public Page<Item> showSearchedItems(@PathVariable("name") String name, Pageable pageable){
+        return itemService.findByNameContaining(name, pageable);
     }
 }

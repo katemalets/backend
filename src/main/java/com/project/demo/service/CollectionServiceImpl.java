@@ -22,4 +22,9 @@ public class CollectionServiceImpl implements CollectionService {
     public List<Collection> findAll() {
         return collectionRepository.findAll();
     }
+
+    @Override
+    public void save(Collection collection) {
+        collectionRepository.save(collection);
+    }
 }

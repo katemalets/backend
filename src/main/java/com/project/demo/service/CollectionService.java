@@ -9,4 +9,6 @@ public interface CollectionService {
     Collection getCollection(long id);
 
     List<Collection> findAll();
+
+    void save(Collection collection);
 }
