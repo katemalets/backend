@@ -24,15 +24,8 @@ public class MyRestDataConfig implements RepositoryRestConfigurer {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        //HttpMethod[] unsupportedActions = {HttpMethod.DELETE,HttpMethod.POST,HttpMethod.PUT};
-
         config.getExposureConfiguration()
                 .forDomainType(User.class);
-//                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)))
-//                .withCollectionExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedActions)));
-
-
-
         exposeIds(config);
     }
 

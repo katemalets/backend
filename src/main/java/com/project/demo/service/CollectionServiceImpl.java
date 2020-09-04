@@ -27,4 +27,9 @@ public class CollectionServiceImpl implements CollectionService {
     public void save(Collection collection) {
         collectionRepository.save(collection);
     }
+
+    @Override
+    public void deleteCollection(long id) {
+        collectionRepository.deleteById(id);
+    }
 }

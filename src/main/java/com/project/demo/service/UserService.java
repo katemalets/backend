@@ -1,6 +1,9 @@
 package com.project.demo.service;
 
 import com.project.demo.entity.User;
+import com.project.demo.payload.request.LoginRequest;
+import com.project.demo.payload.request.SignupRequest;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -19,4 +22,8 @@ public interface UserService {
     User unblockUser(long id);
 
     User makeAdmin(long id);
+
+    ResponseEntity<?> registerUser(SignupRequest signUpRequest);
+
+    ResponseEntity<?> authenticateUser(LoginRequest loginRequest);
 }

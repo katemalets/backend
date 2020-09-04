@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/collections")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CollectionController {
 
     @Autowired
@@ -36,8 +35,18 @@ public class CollectionController {
         return collection;
     }
 
+    @DeleteMapping(path = {"/{id}"})
+    public void deleteCollection(@PathVariable("id") long id){
+        collectionService.deleteCollection(id);
+    }
+
     @GetMapping(path = {"/update/{id}"})
     public Collection updateCollection(@PathVariable("id") long id){
+        return collectionService.getCollection(id);
+    }
+
+    @GetMapping(path = {"/list/{id}"})
+    public Collection showItems(@PathVariable("id") long id){
         return collectionService.getCollection(id);
     }
 }

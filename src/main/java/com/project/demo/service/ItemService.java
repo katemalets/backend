@@ -14,4 +14,8 @@ public interface ItemService {
     List<Item> findAll();
 
     Page<Item> findByNameContaining(@RequestParam("name") String name, Pageable pageable);
+
+    void deleteItem(long id);
+
+    void save(Item item);
 }

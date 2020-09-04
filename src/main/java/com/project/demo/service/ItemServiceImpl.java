@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -31,5 +30,13 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findByNameContaining(name,pageable);
     }
 
+    @Override
+    public void deleteItem(long id) {
+        itemRepository.deleteById(id);
+    }
 
+    @Override
+    public void save(Item item) {
+        itemRepository.save(item);
+    }
 }
