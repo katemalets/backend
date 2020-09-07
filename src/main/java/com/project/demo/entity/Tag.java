@@ -26,16 +26,12 @@ public class Tag {
     public Tag() {
     }
 
-//    public Set<Item> getItems() {
-//        return items;
-//    }
+    public Set<Item> getItems() {
+        return items;
+    }
 
     public void setItems(Set<Item> items) {
         this.items = items;
-    }
-
-    public Tag(String name) {
-        this.name = name;
     }
 
     public Long getId() {

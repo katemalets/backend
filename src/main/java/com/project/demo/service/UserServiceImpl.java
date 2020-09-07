@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).get();
         user.setEnabled(false);
         userRepository.save(user);
+        System.out.println(user.isEnabled());
         return user;
     }
 
