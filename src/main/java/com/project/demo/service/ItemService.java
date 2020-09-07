@@ -1,8 +1,6 @@
 package com.project.demo.service;
 
 import com.project.demo.entity.Item;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -13,9 +11,11 @@ public interface ItemService {
 
     List<Item> findAll();
 
-    Page<Item> findByNameContaining(@RequestParam("name") String name, Pageable pageable);
+    List<Item> findByNameContaining(@RequestParam("name") String name);
 
     void deleteItem(long id);
 
     void save(Item item);
+
+    List<Item> compareByDate();
 }

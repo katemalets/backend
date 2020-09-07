@@ -5,10 +5,9 @@ import com.project.demo.entity.Item;
 import com.project.demo.service.CollectionService;
 import com.project.demo.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -20,6 +19,11 @@ public class ItemController {
 
     @Autowired
     CollectionService collectionService;
+
+    @GetMapping()
+    public List<Item> getItems(){
+        return itemService.findAll();
+    }
 
     @GetMapping(path = {"/{id}"})
     public Item showItem(@PathVariable("id") long id){
@@ -33,7 +37,6 @@ public class ItemController {
         item.setDescription(itemDetails.getDescription());
         item.setImageURL(itemDetails.getImageURL());
         itemService.save(item);
-
         return item;
     }
 
@@ -42,14 +45,9 @@ public class ItemController {
         return itemService.getItem(id);
     }
 
-    @GetMapping()
-    public List<Item> showItems(){
-        return itemService.findAll();
-    }
-
-    @GetMapping("/search/findByNameContaining/{name}")
-    public Page<Item> showSearchedItems(@PathVariable("name") String name, Pageable pageable){
-        return itemService.findByNameContaining(name, pageable);
+    @GetMapping("/search/{name}")
+    public List<Item> showSearchedItems(@PathVariable("name") String name){
+        return itemService.findByNameContaining(name);
     }
 
     @DeleteMapping(path = {"/{id}"})
@@ -62,6 +60,7 @@ public class ItemController {
         Collection collection = collectionService.getCollection(collectionId);
         item.setId((long) 0);
         item.setCollection(collection);
+        item.setDate(System.currentTimeMillis());
         itemService.save(item);
         return item;
     }

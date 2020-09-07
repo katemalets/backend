@@ -3,10 +3,9 @@ package com.project.demo.service;
 import com.project.demo.entity.Item;
 import com.project.demo.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,8 +25,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<Item> findByNameContaining(String name, Pageable pageable) {
-        return itemRepository.findByNameContaining(name,pageable);
+    public List<Item> findByNameContaining(String name){
+        return itemRepository.findByNameContaining(name);
     }
 
     @Override
@@ -38,5 +37,13 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void save(Item item) {
         itemRepository.save(item);
+    }
+
+    @Override
+    public List<Item> compareByDate() {
+        List<Item> items = findAll();
+        Comparator<Item> compareByDate = ((o1, o2) -> (int) (o2.getDate() - o1.getDate()));
+        items.sort(compareByDate);
+        return items;
     }
 }

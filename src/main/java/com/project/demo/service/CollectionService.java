@@ -13,4 +13,6 @@ public interface CollectionService {
     void save(Collection collection);
 
     void deleteCollection(long id);
+
+    List<Collection> compareByItemsNumber();
 }

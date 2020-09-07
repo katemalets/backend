@@ -1,8 +1,5 @@
 package com.project.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -24,6 +21,9 @@ public class Item {
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "collection_id")
     private Collection collection;
+
+    @Column(name = "creation_date")
+    private long creationDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "item_tag",
@@ -50,6 +50,14 @@ public class Item {
                 ", imageURL='" + imageURL + '\'' +
                 ", collection=" + collection +
                 '}';
+    }
+
+    public long getDate() {
+        return creationDate;
+    }
+
+    public void setDate(long creationDate) {
+        this.creationDate = creationDate;
     }
 
     public Set<Tag> getTags() {
@@ -99,6 +107,4 @@ public class Item {
     public void setCollection(Collection collection) {
         this.collection = collection;
     }
-
-
 }

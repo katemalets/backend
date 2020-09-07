@@ -28,6 +28,9 @@ public class Collection {
             CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Item> items;
 
+    @Transient
+    private long itemsNumber;
+
     public Collection() {
     }
 
@@ -104,5 +107,13 @@ public class Collection {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getItemsNumber() {
+        return itemsNumber;
+    }
+
+    public void setItemsNumber(long itemsNumber) {
+        this.itemsNumber = itemsNumber;
     }
 }
