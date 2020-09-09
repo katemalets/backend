@@ -1,4 +1,4 @@
-package com.project.demo.payload.response;
+package com.project.demo.security.payload.response;
 
 public class MessageResponse {
 	private String message;

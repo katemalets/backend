@@ -1,8 +1,8 @@
 package com.project.demo.service;
 
 import com.project.demo.entity.User;
-import com.project.demo.payload.request.LoginRequest;
-import com.project.demo.payload.request.SignupRequest;
+import com.project.demo.security.payload.request.LoginRequest;
+import com.project.demo.security.payload.request.SignupRequest;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

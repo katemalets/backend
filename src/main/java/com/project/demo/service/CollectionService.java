@@ -14,5 +14,5 @@ public interface CollectionService {
 
     void deleteCollection(long id);
 
-    List<Collection> compareByItemsNumber();
+    List<Collection> sortByItemsNumber(int amount);
 }

@@ -17,5 +17,5 @@ public interface ItemService {
 
     void save(Item item);
 
-    List<Item> compareByDate();
+    List<Item> compareByDate(int amount);
 }

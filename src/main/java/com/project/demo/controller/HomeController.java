@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/top/")
+@RequestMapping("/api/top")
 public class HomeController {
 
     @Autowired
@@ -27,27 +26,24 @@ public class HomeController {
 
     @Autowired
     private TagService tagService;
-    //уточнить название!!!
 
-    @GetMapping("collections")
-    public List<Collection> getCollectionsWithMoreItems(){
-       List<Collection> collections = collectionService.compareByItemsNumber();
-        return collections.stream().limit(3).collect(Collectors.toList());
+    @GetMapping("/collections/{amount}")
+    public List<Collection> getTopCollectionsBySize(@PathVariable int amount) {
+        return collectionService.sortByItemsNumber(amount);
     }
 
-    @GetMapping("items")
-    private List<Item> getLastItems(){
-        List<Item> items = itemService.compareByDate();
-        return items.stream().limit(6).collect(Collectors.toList());
+    @GetMapping("/items/{amount}")
+    private List<Item> getLastItems(@PathVariable int amount) {
+        return itemService.compareByDate(amount);
     }
 
-    @GetMapping("tags")
-    private List<Tag> getTags(){
+    @GetMapping("/tags")
+    private List<Tag> getTags() {
         return tagService.findAll();
     }
 
     @GetMapping("/tags/{id}")
-    private Tag getTag(@PathVariable("id") long id){
+    private Tag getTag(@PathVariable("id") long id) {
         return tagService.getTag(id);
     }
 }

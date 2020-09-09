@@ -6,10 +6,10 @@ import com.project.demo.repository.CollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CollectionServiceImpl implements CollectionService {
@@ -36,8 +36,11 @@ public class CollectionServiceImpl implements CollectionService {
         collectionRepository.deleteById(id);
     }
 
+    //toDo from db(select from db(not working here)
+    //toDo hibernate search(!!!findInfo!!!)
+    //toDo checkboxes!(instead of enabled)
     @Override
-    public List<Collection> compareByItemsNumber() {
+    public List<Collection> sortByItemsNumber(int amount) {
         List<Collection> collections = findAll();
         for(Collection collection: collections){
             Set<Item> items = collection.getItems();
@@ -47,6 +50,6 @@ public class CollectionServiceImpl implements CollectionService {
         Comparator<Collection> compareByItems =
                 (o1, o2) -> (int) (o2.getItemsNumber() - o1.getItemsNumber());
         collections.sort(compareByItems);
-        return collections;
+        return collections.stream().limit(amount).collect(Collectors.toList());
     }
 }

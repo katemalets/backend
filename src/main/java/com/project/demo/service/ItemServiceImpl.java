@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -40,10 +41,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> compareByDate() {
+    public List<Item> compareByDate(int amount) {
         List<Item> items = findAll();
         Comparator<Item> compareByDate = ((o1, o2) -> (int) (o2.getDate() - o1.getDate()));
         items.sort(compareByDate);
-        return items;
+        return items.stream().limit(amount).collect(Collectors.toList());
     }
 }
