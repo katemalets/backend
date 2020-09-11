@@ -1,5 +1,7 @@
 package com.project.demo.entity;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -45,14 +47,14 @@ public class Collection {
         return items;
     }
 
-//    public User getUser() {
-//        return user;
-//    }
+    @JsonIgnore
+    public long getUser() {
+        return user.getId();
+    }
 
     public void setUser(User user) {
         this.user = user;
     }
-
 
     public void setItems(Set<Item> items) {
         this.items = items;

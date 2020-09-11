@@ -60,7 +60,18 @@ public class ItemController {
         item.setId((long) 0);
         item.setCollection(collection);
         item.setDate(System.currentTimeMillis());
+        item.setLikesNumber(0);
         itemService.save(item);
         return item;
+    }
+
+    @PutMapping(path = {"/{userId}/like/{itemId}"})
+    public Item likeItem(@PathVariable("itemId") long itemId,@PathVariable("userId") long userId){
+        return this.itemService.likeItem(itemId,userId);
+    }
+
+    @PutMapping(path = {"/{userId}/dislike/{itemId}"})
+    public Item dislikeItem(@PathVariable("itemId") long itemId,@PathVariable("userId") long userId){
+        return this.itemService.dislikeItem(itemId,userId);
     }
 }

@@ -1,6 +1,11 @@
 package com.project.demo.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,7 +30,16 @@ public class Item {
     @Column(name = "creation_date")
     private long creationDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Column(name = "likes_number")
+    private long likesNumber;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_item",
+    joinColumns = @JoinColumn(name = "item_id"),
+    inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> usersWhoLiked = new HashSet<>() ;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "item_tag",
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -52,6 +66,24 @@ public class Item {
                 '}';
     }
 
+    @JsonIgnore
+    public Set<User> getUsersWhoLiked() {
+        return usersWhoLiked;
+    }
+
+    @JsonIgnore
+    public void setUsersWhoLiked(Set<User> usersWhoLiked) {
+        this.usersWhoLiked = usersWhoLiked;
+    }
+
+    public long getLikesNumber() {
+        return likesNumber;
+    }
+
+    public void setLikesNumber(long likesNumber) {
+        this.likesNumber = likesNumber;
+    }
+
     public long getDate() {
         return creationDate;
     }
@@ -59,6 +91,7 @@ public class Item {
     public void setDate(long creationDate) {
         this.creationDate = creationDate;
     }
+
 
 //    public Set<Tag> getTags() {
 //        return tags;
@@ -100,9 +133,9 @@ public class Item {
         this.imageURL = imageURL;
     }
 
-//    public Collection getCollection() {
-//        return collection;
-//    }
+    public long getCollection() {
+        return collection.getId();
+    }
 
     public void setCollection(Collection collection) {
         this.collection = collection;

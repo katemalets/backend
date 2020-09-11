@@ -18,4 +18,8 @@ public interface ItemService {
     void save(Item item);
 
     List<Item> compareByDate(int amount);
+
+    Item likeItem(long itemId, long userId);
+
+    Item dislikeItem(long itemId, long userId);
 }

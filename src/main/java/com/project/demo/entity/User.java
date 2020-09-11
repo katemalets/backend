@@ -29,6 +29,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_item",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private Set<Item> likedItems = new HashSet<>();
+
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Collection> collections;
@@ -43,6 +49,13 @@ public class User {
         this.password = password;
     }
 
+    public Set<Item> getLikedItems() {
+        return likedItems;
+    }
+
+    public void setLikedItems(Set<Item> likedItems) {
+        this.likedItems = likedItems;
+    }
 
     public Set<Authority> getAuthorities() {
         return authorities;
