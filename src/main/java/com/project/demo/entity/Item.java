@@ -39,6 +39,10 @@ public class Item {
     inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> usersWhoLiked = new HashSet<>() ;
 
+    //@Column(name = "user_like")
+    @Transient
+    private boolean userLiked;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "item_tag",
             joinColumns = @JoinColumn(name = "item_id"),
@@ -64,6 +68,14 @@ public class Item {
                 ", imageURL='" + imageURL + '\'' +
                 ", collection=" + collection +
                 '}';
+    }
+
+    public boolean isUserLiked() {
+        return userLiked;
+    }
+
+    public void setUserLiked(boolean userLiked) {
+        this.userLiked = userLiked;
     }
 
     @JsonIgnore

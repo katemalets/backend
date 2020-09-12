@@ -43,6 +43,17 @@ public class Collection {
         this.description = description;
     }
 
+    public Collection(Long id, String name, String topic, String imageURL, String description, User user, Set<Item> items, long itemsNumber) {
+        this.id = id;
+        this.name = name;
+        this.topic = topic;
+        this.imageURL = imageURL;
+        this.description = description;
+        this.user = user;
+        this.items = items;
+        this.itemsNumber = itemsNumber;
+    }
+
     public Set<Item> getItems() {
         return items;
     }

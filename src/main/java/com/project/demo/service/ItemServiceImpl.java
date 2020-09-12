@@ -59,8 +59,10 @@ public class ItemServiceImpl implements ItemService {
         System.out.println("Users who liked: " + item.getUsersWhoLiked());
         System.out.println("did user like item? - " + item.getUsersWhoLiked().contains(user));
         if(!item.getUsersWhoLiked().contains(user)){
+            System.out.println(user);
             item.setLikesNumber(item.getLikesNumber() + 1);
             item.getUsersWhoLiked().add(user);
+            item.setUserLiked(true);
         }
         itemRepository.save(item);
         return item;
@@ -74,6 +76,7 @@ public class ItemServiceImpl implements ItemService {
         if(item.getUsersWhoLiked().contains(user)){
             item.setLikesNumber(item.getLikesNumber() - 1);
             item.getUsersWhoLiked().remove(user);
+            item.setUserLiked(false);
         }
         itemRepository.save(item);
         return item;

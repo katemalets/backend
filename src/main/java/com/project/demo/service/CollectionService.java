@@ -15,4 +15,6 @@ public interface CollectionService {
     void deleteCollection(long id);
 
     List<Collection> sortByItemsNumber(int amount);
+
+    Collection addCollection(long collectionId, long userId);
 }
