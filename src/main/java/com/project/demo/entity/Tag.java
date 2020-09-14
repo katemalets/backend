@@ -1,5 +1,7 @@
 package com.project.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -22,10 +24,12 @@ public class Tag {
     public Tag() {
     }
 
+    @JsonIgnore
     public Set<Item> getItems() {
         return items;
     }
 
+    @JsonIgnore
     public void setItems(Set<Item> items) {
         this.items = items;
     }

@@ -9,6 +9,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class UserController {
 
+    //toDo social networks entering
+    //toDo search full text
+    //toDo drag n drop
+    //toDo markdown format
+    //toDo cloud tags
+    //toDo websockets comment
+
     @Autowired
     private UserService userService;
 
