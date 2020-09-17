@@ -9,4 +9,6 @@ public interface TagService {
     List<Tag> findAll();
 
     Tag getTag(long id);
+
+    void deleteTag(long tagId, long itemId);
 }
