@@ -43,7 +43,7 @@ public class Collection {
         this.description = description;
     }
 
-    public Collection(Long id, String name, String topic, String imageURL, String description, User user, Set<Item> items, long itemsNumber) {
+    public Collection(long id,String name, String topic, String imageURL, String description, User user, Set<Item> items, long itemsNumber) {
         this.id = id;
         this.name = name;
         this.topic = topic;
@@ -58,11 +58,15 @@ public class Collection {
         return items;
     }
 
-    @JsonIgnore
-    public long getUser() {
+    public long getUserId() {
         return user.getId();
     }
 
+//    public User getUser() {
+//        return user;
+//    }
+
+    @JsonIgnore
     public void setUser(User user) {
         this.user = user;
     }

@@ -68,9 +68,9 @@ public class CollectionServiceImpl implements CollectionService {
         return collections.stream().limit(amount).collect(Collectors.toList());
     }
 
-    //toDo add tags for items!
     @Override
     public Collection addCollection(long collectionId, long userId) {
+
         Collection oldCollection = getCollection(collectionId);
         User user = userRepository.findById(userId).get();
         Collection newCollection = new Collection();
@@ -102,4 +102,14 @@ public class CollectionServiceImpl implements CollectionService {
         collectionRepository.save(newCollection);
         return newCollection;
     }
+//
+//    @Override
+//    public Collection updateCollection(long id, Collection collectionDetails) {
+//        Collection collection = getCollection(id);
+//        collection.setName(collectionDetails.getName());
+//        collection.setDescription(collectionDetails.getDescription());
+//        collection.setImageURL(collectionDetails.getImageURL());
+//        collectionRepository.save(collection);
+//        return collection;
+//    }
 }

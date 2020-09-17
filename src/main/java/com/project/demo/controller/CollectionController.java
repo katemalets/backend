@@ -36,7 +36,6 @@ public class CollectionController {
         collection.setDescription(collectionDetails.getDescription());
         collection.setImageURL(collectionDetails.getImageURL());
         collectionService.save(collection);
-
         return collection;
     }
 

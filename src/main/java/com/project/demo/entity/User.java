@@ -29,11 +29,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities = new HashSet<>();
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_item",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "item_id"))
-//    private Set<Item> likedItems = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_item",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private Set<Item> likedItems = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
@@ -49,23 +49,29 @@ public class User {
         this.password = password;
     }
 
-    public User(Long id, String username, String email, String password, boolean enabled, Set<Authority> authorities, Set<Collection> collections) {
+    public User(long id,String username, String email, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.enabled = enabled;
-        this.authorities = authorities;
-        this.collections = collections;
     }
 
-    //    public Set<Item> getLikedItems() {
-//        return likedItems;
+//    public User(String username, String email, String password, boolean enabled, Set<Authority> authorities, Set<Collection> collections) {
+//        this.username = username;
+//        this.email = email;
+//        this.password = password;
+//        this.enabled = enabled;
+//        this.authorities = authorities;
+//        this.collections = collections;
 //    }
-//
-//    public void setLikedItems(Set<Item> likedItems) {
-//        this.likedItems = likedItems;
-//    }
+
+        public Set<Item> getLikedItems() {
+        return likedItems;
+    }
+
+    public void setLikedItems(Set<Item> likedItems) {
+        this.likedItems = likedItems;
+    }
 
     public Set<Authority> getAuthorities() {
         return authorities;

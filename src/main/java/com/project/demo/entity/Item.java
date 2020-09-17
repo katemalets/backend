@@ -39,18 +39,16 @@ public class Item {
     inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> usersWhoLiked = new HashSet<>() ;
 
-    //@Column(name = "user_like")
-    @Transient
-    private boolean userLiked;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "item_tag",
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;
 
-    public Item(){
+    @Transient
+    private boolean userLiked;
 
+    public Item(){
     }
 
     public Item(String name, String description, String imageURL) {
@@ -144,10 +142,16 @@ public class Item {
         this.imageURL = imageURL;
     }
 
-    public long getCollection() {
+    public long getCollectionId() {
         return collection.getId();
     }
 
+    @JsonIgnore
+    public Collection getCollection() {
+        return collection;
+    }
+
+    @JsonIgnore
     public void setCollection(Collection collection) {
         this.collection = collection;
     }

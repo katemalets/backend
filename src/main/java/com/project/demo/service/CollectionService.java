@@ -17,4 +17,6 @@ public interface CollectionService {
     List<Collection> sortByItemsNumber(int amount);
 
     Collection addCollection(long collectionId, long userId);
+
+  //  Collection updateCollection(long id, Collection collectionDetails);
 }
