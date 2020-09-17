@@ -102,14 +102,14 @@ public class CollectionServiceImpl implements CollectionService {
         collectionRepository.save(newCollection);
         return newCollection;
     }
-//
-//    @Override
-//    public Collection updateCollection(long id, Collection collectionDetails) {
-//        Collection collection = getCollection(id);
-//        collection.setName(collectionDetails.getName());
-//        collection.setDescription(collectionDetails.getDescription());
-//        collection.setImageURL(collectionDetails.getImageURL());
-//        collectionRepository.save(collection);
-//        return collection;
-//    }
+
+    @Override
+    public Collection updateCollection(long id, Collection collectionDetails) {
+        Collection collection = getCollection(id);
+        collection.setName(collectionDetails.getName());
+        collection.setDescription(collectionDetails.getDescription());
+        collection.setImageURL(collectionDetails.getImageURL());
+        collectionRepository.save(collection);
+        return collection;
+    }
 }

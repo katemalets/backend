@@ -1,6 +1,8 @@
 package com.project.demo.service;
 
 import com.project.demo.entity.Item;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -22,4 +24,8 @@ public interface ItemService {
     Item likeItem(long itemId, long userId);
 
     Item dislikeItem(long itemId, long userId);
+
+    Item updateItem(long id, Item itemDetails);
+
+    Item addItem(Item item, long collectionId);
 }

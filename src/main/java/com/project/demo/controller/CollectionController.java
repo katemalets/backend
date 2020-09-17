@@ -1,9 +1,7 @@
 package com.project.demo.controller;
 
 import com.project.demo.entity.Collection;
-import com.project.demo.entity.User;
 import com.project.demo.service.CollectionService;
-import com.project.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +14,6 @@ public class CollectionController {
     @Autowired
     private CollectionService collectionService;
 
-    @Autowired
-    private UserService userService;
-
     @GetMapping()
     public List<Collection> showCollections(){
         return collectionService.findAll();
@@ -30,13 +25,8 @@ public class CollectionController {
     }
 
     @PutMapping(path = {"/{id}"})
-    public Collection update(@PathVariable("id") long id, @RequestBody Collection collectionDetails){
-        Collection collection = collectionService.getCollection(id);
-        collection.setName(collectionDetails.getName());
-        collection.setDescription(collectionDetails.getDescription());
-        collection.setImageURL(collectionDetails.getImageURL());
-        collectionService.save(collection);
-        return collection;
+    public Collection updateCollection(@PathVariable("id") long id, @RequestBody Collection collectionDetails){
+        return collectionService.updateCollection(id, collectionDetails);
     }
 
     @DeleteMapping(path = {"/{id}"})
@@ -55,8 +45,7 @@ public class CollectionController {
     }
 
     @GetMapping(path = {"/{userId}/{collectionId}"})
-    public Collection addCollection(@PathVariable("userId") long userId,
-                                    @PathVariable("collectionId") long collectionId){
+    public Collection addCollection(@PathVariable("userId") long userId, @PathVariable("collectionId") long collectionId){
         return collectionService.addCollection(userId, collectionId);
     }
 }

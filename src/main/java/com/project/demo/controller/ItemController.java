@@ -1,6 +1,5 @@
 package com.project.demo.controller;
 
-import com.project.demo.entity.Collection;
 import com.project.demo.entity.Item;
 import com.project.demo.service.CollectionService;
 import com.project.demo.service.ItemService;
@@ -31,12 +30,7 @@ public class ItemController {
 
     @PutMapping(path = {"/{id}"})
     public Item update(@PathVariable("id") long id, @RequestBody Item itemDetails){
-        Item item = itemService.getItem(id);
-        item.setName(itemDetails.getName());
-        item.setDescription(itemDetails.getDescription());
-        item.setImageURL(itemDetails.getImageURL());
-        itemService.save(item);
-        return item;
+        return itemService.updateItem(id, itemDetails);
     }
 
     @GetMapping(path = {"/update/{id}"})
@@ -56,13 +50,7 @@ public class ItemController {
 
     @PostMapping(path = {"/collections/{id}"})
     public Item addItem(@RequestBody Item item, @PathVariable("id") Long collectionId){
-        Collection collection = collectionService.getCollection(collectionId);
-        item.setId((long) 0);
-        item.setCollection(collection);
-        item.setDate(System.currentTimeMillis());
-        item.setLikesNumber(0);
-        itemService.save(item);
-        return item;
+        return itemService.addItem(item, collectionId);
     }
 
     @PutMapping(path = {"/{userId}/like/{itemId}"})

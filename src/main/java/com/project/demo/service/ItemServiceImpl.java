@@ -1,7 +1,9 @@
 package com.project.demo.service;
 
+import com.project.demo.entity.Collection;
 import com.project.demo.entity.Item;
 import com.project.demo.entity.User;
+import com.project.demo.repository.CollectionRepository;
 import com.project.demo.repository.ItemRepository;
 import com.project.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CollectionRepository collectionRepository;
 
     @Override
     public Item getItem(long id) {
@@ -36,6 +41,27 @@ public class ItemServiceImpl implements ItemService {
         searchedItems.addAll(itemsByName);
         searchedItems.addAll(itemsByDescription);
         return searchedItems;
+    }
+
+    @Override
+    public Item updateItem(long id, Item itemDetails) {
+        Item item = getItem(id);
+        item.setName(itemDetails.getName());
+        item.setDescription(itemDetails.getDescription());
+        item.setImageURL(itemDetails.getImageURL());
+        itemRepository.save(item);
+        return item;
+    }
+
+    @Override
+    public Item addItem(Item item, long collectionId) {
+        Collection collection = collectionRepository.findById(collectionId).get();
+        item.setId((long) 0);
+        item.setCollection(collection);
+        item.setDate(System.currentTimeMillis());
+        item.setLikesNumber(0);
+        itemRepository.save(item);
+        return item;
     }
 
     @Override
