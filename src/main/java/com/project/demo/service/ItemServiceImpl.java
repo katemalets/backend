@@ -2,9 +2,11 @@ package com.project.demo.service;
 
 import com.project.demo.entity.Collection;
 import com.project.demo.entity.Item;
+import com.project.demo.entity.Tag;
 import com.project.demo.entity.User;
 import com.project.demo.repository.CollectionRepository;
 import com.project.demo.repository.ItemRepository;
+import com.project.demo.repository.TagRepository;
 import com.project.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private CollectionRepository collectionRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     @Override
     public Item getItem(long id) {
@@ -49,6 +54,30 @@ public class ItemServiceImpl implements ItemService {
         item.setName(itemDetails.getName());
         item.setDescription(itemDetails.getDescription());
         item.setImageURL(itemDetails.getImageURL());
+
+        List<Tag> tags = tagRepository.findAll();
+        Set<Tag> itemTags = itemDetails.getTags();
+        Set<Tag> newTags = new HashSet<>();
+
+        for(Tag oldTag: itemTags){
+            boolean flagForAddingTag = true;
+            for(Tag currentTag: tags){
+                if(currentTag.getName().equals(oldTag.getName())){
+                    System.out.println("We have this item " + oldTag.getName());
+                    flagForAddingTag = false;
+                    break;
+                }
+            }
+            if(flagForAddingTag){
+                System.out.println("Adding new tag + " + oldTag.getName());
+                Tag newTag = new Tag();
+                newTag.setId(0);
+                newTag.setName(oldTag.getName());
+                newTags.add(newTag);
+                tagRepository.save(newTag);
+            }
+        }
+        item.setTags(newTags);
         itemRepository.save(item);
         return item;
     }

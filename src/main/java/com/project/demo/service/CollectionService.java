@@ -1,8 +1,6 @@
 package com.project.demo.service;
 
 import com.project.demo.entity.Collection;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 

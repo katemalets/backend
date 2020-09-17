@@ -2,11 +2,8 @@ package com.project.demo.service;
 
 import com.project.demo.entity.Collection;
 import com.project.demo.entity.Item;
-import com.project.demo.entity.Tag;
 import com.project.demo.entity.User;
 import com.project.demo.repository.CollectionRepository;
-import com.project.demo.repository.ItemRepository;
-import com.project.demo.repository.TagRepository;
 import com.project.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,11 +23,6 @@ public class CollectionServiceImpl implements CollectionService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ItemRepository itemRepository;
-
-    @Autowired
-    private TagRepository tagRepository;
 
     @Override
     public Collection getCollection(long id) {
