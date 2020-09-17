@@ -46,7 +46,7 @@ public class ItemController {
 
     @GetMapping("/search/{name}")
     public List<Item> showSearchedItems(@PathVariable("name") String name){
-        return itemService.findByNameContaining(name);
+        return itemService.findItems(name);
     }
 
     @DeleteMapping(path = {"/{id}"})

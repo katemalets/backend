@@ -29,9 +29,13 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findAll();
     }
 
-    @Override
-    public List<Item> findByNameContaining(String name){
-        return itemRepository.findByNameContaining(name);
+    public List<Item> findItems(String name){
+        List<Item> searchedItems = new ArrayList<>();
+        List<Item> itemsByName = itemRepository.findByNameContaining(name);
+        List<Item> itemsByDescription = itemRepository.findByDescriptionContaining(name);
+        searchedItems.addAll(itemsByName);
+        searchedItems.addAll(itemsByDescription);
+        return searchedItems;
     }
 
     @Override

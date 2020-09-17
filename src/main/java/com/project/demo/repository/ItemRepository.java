@@ -11,4 +11,5 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findByNameContaining(@RequestParam("name") String name);
+    List<Item> findByDescriptionContaining(@RequestParam("description") String description);
 }

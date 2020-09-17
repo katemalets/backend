@@ -62,14 +62,15 @@ public class Collection {
         return user.getId();
     }
 
-//    public User getUser() {
-//        return user;
-//    }
-
     @JsonIgnore
     public void setUser(User user) {
         this.user = user;
     }
+
+//    @JsonIgnore
+//    public User getUser() {
+//        return user;
+//    }
 
     public void setItems(Set<Item> items) {
         this.items = items;

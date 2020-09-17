@@ -11,7 +11,7 @@ public interface ItemService {
 
     List<Item> findAll();
 
-    List<Item> findByNameContaining(@RequestParam("name") String name);
+    List<Item> findItems(String name);
 
     void deleteItem(long id);
 
