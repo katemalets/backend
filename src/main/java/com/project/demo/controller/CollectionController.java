@@ -48,4 +48,9 @@ public class CollectionController {
     public Collection addCollection(@PathVariable("userId") long userId, @PathVariable("collectionId") long collectionId){
         return collectionService.addCollection(userId, collectionId);
     }
+
+    @GetMapping("/top/{amount}")
+    public List<Collection> getTopCollectionsBySize(@PathVariable int amount) {
+        return collectionService.sortByItemsNumber(amount);
+    }
 }

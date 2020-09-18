@@ -1,7 +1,9 @@
 package com.project.demo.controller;
 
+import com.project.demo.entity.Comment;
 import com.project.demo.entity.Item;
 import com.project.demo.service.CollectionService;
+import com.project.demo.service.CommentService;
 import com.project.demo.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -61,5 +63,10 @@ public class ItemController {
     @PutMapping(path = {"/{userId}/dislike/{itemId}"})
     public Item dislikeItem(@PathVariable("itemId") long itemId,@PathVariable("userId") long userId){
         return this.itemService.dislikeItem(itemId,userId);
+    }
+
+    @GetMapping("/top/{amount}")
+    private List<Item> getLastItems(@PathVariable int amount) {
+        return itemService.compareByDate(amount);
     }
 }

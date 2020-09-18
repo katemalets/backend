@@ -48,6 +48,11 @@ public class Item {
     @Transient
     private boolean userLiked;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "item_id")
+    private List<Comment> comments;
+
     public Item(){
     }
 
@@ -66,6 +71,14 @@ public class Item {
                 ", imageURL='" + imageURL + '\'' +
                 ", collection=" + collection +
                 '}';
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public boolean isUserLiked() {

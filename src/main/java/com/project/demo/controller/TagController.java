@@ -5,6 +5,8 @@ import com.project.demo.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/tags")
 public class TagController {
@@ -21,5 +23,15 @@ public class TagController {
     @PostMapping("/items/{itemId}")
     private Tag addTag(@RequestBody Tag tag, @PathVariable("itemId") long itemId){
         return tagService.addTag(tag, itemId);
+    }
+
+    @GetMapping
+    private List<Tag> getTags() {
+        return tagService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    private Tag getTag(@PathVariable("id") long id) {
+        return tagService.getTag(id);
     }
 }
