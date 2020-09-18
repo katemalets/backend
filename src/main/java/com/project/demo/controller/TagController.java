@@ -18,8 +18,8 @@ public class TagController {
         tagService.deleteTag(tagId, itemId);
     }
 
-    @PostMapping("/create")
-    private Tag addTag(@RequestBody Tag tag){
-        return tag;
+    @PostMapping("/items/{itemId}")
+    private Tag addTag(@RequestBody Tag tag, @PathVariable("itemId") long itemId){
+        return tagService.addTag(tag, itemId);
     }
 }
