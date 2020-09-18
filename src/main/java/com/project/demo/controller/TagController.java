@@ -1,5 +1,6 @@
 package com.project.demo.controller;
 
+import com.project.demo.entity.Item;
 import com.project.demo.entity.Tag;
 import com.project.demo.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,10 @@ public class TagController {
     @GetMapping("/{id}")
     private Tag getTag(@PathVariable("id") long id) {
         return tagService.getTag(id);
+    }
+
+    @GetMapping("/top/items/{id}")
+    private List<Item> showItemsByTag(@PathVariable("id") long id){
+        return tagService.findItemsByTagId(id);
     }
 }

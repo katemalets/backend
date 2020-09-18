@@ -7,6 +7,7 @@ import com.project.demo.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -66,5 +67,21 @@ public class TagServiceImpl implements TagService {
         item.setTags(itemTags);
         itemRepository.save(item);
         return null;
+    }
+
+    @Override
+    public List<Item> findItemsByTagId(long id) {
+        List<Item> items = itemRepository.findAll();
+        List<Item> newItems = new ArrayList<>();
+        Tag tag = tagRepository.findById(id).get();
+        for(Item item: items){
+            Set<Tag> itemTags = item.getTags();
+            for(Tag currentTag: itemTags){
+                if(currentTag.getName().equals(tag.getName())){
+                    newItems.add(item);
+                }
+            }
+        }
+        return newItems;
     }
 }

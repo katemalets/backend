@@ -29,6 +29,9 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private TagRepository tagRepository;
 
+    @Autowired
+    private TagService tagService;
+
     @Override
     public Item getItem(long id) {
         return itemRepository.findById(id).get();
@@ -43,8 +46,14 @@ public class ItemServiceImpl implements ItemService {
         List<Item> searchedItems = new ArrayList<>();
         List<Item> itemsByName = itemRepository.findByNameContaining(name);
         List<Item> itemsByDescription = itemRepository.findByDescriptionContaining(name);
+        List<Tag> tags = tagRepository.findByNameContaining(name);
+        List<Item> itemsByTag = new ArrayList<>();
+        for(Tag currentTag: tags){
+            itemsByTag = tagService.findItemsByTagId(currentTag.getId());
+        }
         searchedItems.addAll(itemsByName);
         searchedItems.addAll(itemsByDescription);
+        searchedItems.addAll(itemsByTag);
         return searchedItems;
     }
 
