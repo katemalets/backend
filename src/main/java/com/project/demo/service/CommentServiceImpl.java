@@ -9,8 +9,6 @@ import com.project.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -30,10 +28,6 @@ public class CommentServiceImpl implements CommentService {
         comment.setId(0);
         comment.setUser(user);
         comment.setItem(item);
-//        List<Comment> comments = item.getComments();
-//        comments.add(comment);
-//        item.setComments(comments);
-//        itemRepository.save(item);
         commentRepository.save(comment);
         return comment;
     }

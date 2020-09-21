@@ -12,7 +12,7 @@ public class Comment {
 
     private String comment;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 

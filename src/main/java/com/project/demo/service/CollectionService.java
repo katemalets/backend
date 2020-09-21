@@ -18,5 +18,5 @@ public interface CollectionService {
 
     Collection addCollection(long collectionId, long userId);
 
-    Collection updateCollection(long id, Collection collectionDetails);
+    Collection updateCollection(long collectionId, Collection collectionDetails);
 }

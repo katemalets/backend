@@ -2,6 +2,7 @@ package com.project.demo.service;
 
 import com.project.demo.entity.Collection;
 import com.project.demo.entity.Item;
+import com.project.demo.entity.Tag;
 import com.project.demo.entity.User;
 import com.project.demo.repository.CollectionRepository;
 import com.project.demo.repository.UserRepository;
@@ -22,7 +23,6 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Autowired
     private UserRepository userRepository;
-
 
     @Override
     public Collection getCollection(long id) {
@@ -86,8 +86,13 @@ public class CollectionServiceImpl implements CollectionService {
             newItem.setDescription(oldItem.getDescription());
             newItem.setImageURL(oldItem.getImageURL());
             newItem.setCollection(newCollection);
-            newItem.setTags(oldItem.getTags());
-            System.out.println(oldItem.getTags());
+            Set<Tag> tags = oldItem.getTags();
+            Set<Tag> newTags = new HashSet<>();
+            for(Tag tag: tags){
+                newTags.add(tag);
+                System.out.println(tag.getName());
+            }
+            newItem.setTags(newTags);
             newItems.add(newItem);
         }
         newCollection.setItems(newItems);
@@ -96,8 +101,8 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public Collection updateCollection(long id, Collection collectionDetails) {
-        Collection collection = getCollection(id);
+    public Collection updateCollection(long collectionId, Collection collectionDetails) {
+        Collection collection = getCollection(collectionId);
         collection.setName(collectionDetails.getName());
         collection.setDescription(collectionDetails.getDescription());
         collection.setImageURL(collectionDetails.getImageURL());

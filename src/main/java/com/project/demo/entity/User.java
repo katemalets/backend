@@ -13,7 +13,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private String username;
 
@@ -56,16 +56,7 @@ public class User {
         this.password = password;
     }
 
-//    public User(String username, String email, String password, boolean enabled, Set<Authority> authorities, Set<Collection> collections) {
-//        this.username = username;
-//        this.email = email;
-//        this.password = password;
-//        this.enabled = enabled;
-//        this.authorities = authorities;
-//        this.collections = collections;
-//    }
-
-        public Set<Item> getLikedItems() {
+    public Set<Item> getLikedItems() {
         return likedItems;
     }
 
