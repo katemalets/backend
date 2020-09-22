@@ -4,6 +4,7 @@ package com.project.demo.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,9 +46,6 @@ public class Item {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;
 
-    @Transient
-    private boolean userLiked;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "item_id")
@@ -73,20 +71,20 @@ public class Item {
                 '}';
     }
 
+    public List<Long> getUsersWhoLikedIds(){
+        List<Long> usersWhoLikedIds = new ArrayList<>();
+        for(User user: usersWhoLiked){
+            usersWhoLikedIds.add(user.getId());
+        }
+        return usersWhoLikedIds;
+    }
+
     public List<Comment> getComments() {
         return comments;
     }
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
-    }
-
-    public boolean isUserLiked() {
-        return userLiked;
-    }
-
-    public void setUserLiked(boolean userLiked) {
-        this.userLiked = userLiked;
     }
 
     @JsonIgnore

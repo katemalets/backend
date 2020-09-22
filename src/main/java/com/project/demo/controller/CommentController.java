@@ -5,6 +5,7 @@ import com.project.demo.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
@@ -16,9 +17,6 @@ public class CommentController {
     public Comment addComment(@RequestBody Comment comment,
                               @PathVariable("itemId") long itemId,
                               @PathVariable("userId") long userId){
-        System.out.println(comment.getComment());
-        System.out.println(itemId);
-        System.out.println(userId);
         return commentService.addComment(comment, itemId, userId);
     }
 }

@@ -66,6 +66,7 @@ public class ItemServiceImpl implements ItemService {
 
         List<Tag> tags = tagRepository.findAll();
         Set<Tag> itemTags = itemDetails.getTags();
+        System.out.println(itemTags);
         Set<Tag> newTags = new HashSet<>();
 
         for(Tag oldTag: itemTags){
@@ -73,6 +74,7 @@ public class ItemServiceImpl implements ItemService {
             for(Tag currentTag: tags){
                 if(currentTag.getName().equals(oldTag.getName())){
                     System.out.println("We have this item " + oldTag.getName());
+                    newTags.add(currentTag);
                     flagForAddingTag = false;
                     break;
                 }
