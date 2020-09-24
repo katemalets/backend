@@ -21,27 +21,27 @@ public class ItemController {
     CollectionService collectionService;
 
     @GetMapping()
-    public List<Item> getItems(){
+    public List<Item> getItems() {
         return itemService.findAll();
     }
 
     @GetMapping(path = {"/{id}"})
-    public Item showItem(@PathVariable("id") long id){
+    public Item showItem(@PathVariable("id") long id) {
         return itemService.getItem(id);
     }
 
     @PutMapping(path = {"/{id}"})
-    public Item update(@PathVariable("id") long id, @RequestBody Item itemDetails){
+    public Item update(@PathVariable("id") long id, @RequestBody Item itemDetails) {
         return itemService.updateItem(id, itemDetails);
     }
 
     @GetMapping(path = {"/update/{id}"})
-    public Item updateItem(@PathVariable("id") long id){
+    public Item updateItem(@PathVariable("id") long id) {
         return itemService.getItem(id);
     }
 
     @GetMapping("/search/{name}")
-    public List<Item> showSearchedItems(@PathVariable("name") String name){
+    public List<Item> showSearchedItems(@PathVariable("name") String name) {
         return itemService.findItems(name);
     }
 
@@ -51,18 +51,18 @@ public class ItemController {
     }
 
     @PostMapping(path = {"/collections/{id}"})
-    public Item addItem(@RequestBody Item item, @PathVariable("id") Long collectionId){
+    public Item addItem(@RequestBody Item item, @PathVariable("id") Long collectionId) {
         return itemService.addItem(item, collectionId);
     }
 
     @PutMapping(path = {"/{userId}/like/{itemId}"})
-    public Item likeItem(@PathVariable("itemId") long itemId,@PathVariable("userId") long userId){
-        return this.itemService.likeItem(itemId,userId);
+    public Item likeItem(@PathVariable("itemId") long itemId, @PathVariable("userId") long userId) {
+        return this.itemService.likeItem(itemId, userId);
     }
 
     @PutMapping(path = {"/{userId}/dislike/{itemId}"})
-    public Item dislikeItem(@PathVariable("itemId") long itemId,@PathVariable("userId") long userId){
-        return this.itemService.dislikeItem(itemId,userId);
+    public Item dislikeItem(@PathVariable("itemId") long itemId, @PathVariable("userId") long userId) {
+        return this.itemService.dislikeItem(itemId, userId);
     }
 
     @GetMapping("/top/{amount}")

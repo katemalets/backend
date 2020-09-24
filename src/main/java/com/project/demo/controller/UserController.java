@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     //toDo social networks entering
-    //toDo search full text
-    //toDo drag n drop
     //toDo markdown format
     //toDo cloud tags
     //toDo websockets comment
@@ -20,9 +18,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(path = {"/{id}"})
-    public User showUser(@PathVariable("id") long id){
+    public User showUser(@PathVariable("id") long id) {
         return userService.getUser(id);
     }
-
 
 }

@@ -15,7 +15,7 @@ import java.util.Set;
 @Configuration
 public class MyRestDataConfig implements RepositoryRestConfigurer {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public MyRestDataConfig(EntityManager entityManager) {
@@ -32,7 +32,7 @@ public class MyRestDataConfig implements RepositoryRestConfigurer {
     private void exposeIds(RepositoryRestConfiguration config) {
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
         List<Class> entityClasses = new ArrayList<>();
-        for(EntityType entity: entities){
+        for (EntityType entity : entities) {
             entityClasses.add(entity.getJavaType());
         }
         Class[] domainTypes = entityClasses.toArray(new Class[0]);

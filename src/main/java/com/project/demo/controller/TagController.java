@@ -17,12 +17,12 @@ public class TagController {
 
     @DeleteMapping(path = "/{tagId}/items/{itemId}")
     private void deleteTag(@PathVariable("tagId") long tagId,
-                           @PathVariable("itemId") long itemId){
+                           @PathVariable("itemId") long itemId) {
         tagService.deleteTag(tagId, itemId);
     }
 
     @PostMapping("/items/{itemId}")
-    private Tag addTag(@RequestBody Tag tag, @PathVariable("itemId") long itemId){
+    private Tag addTag(@RequestBody Tag tag, @PathVariable("itemId") long itemId) {
         return tagService.addTag(tag, itemId);
     }
 
@@ -37,7 +37,7 @@ public class TagController {
     }
 
     @GetMapping("/top/items/{id}")
-    private List<Item> showItemsByTag(@PathVariable("id") long id){
+    private List<Item> showItemsByTag(@PathVariable("id") long id) {
         return tagService.findItemsByTagId(id);
     }
 }

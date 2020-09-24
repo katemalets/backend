@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-	@Autowired
-	UserServiceImpl userService;
+    @Autowired
+    UserServiceImpl userService;
 
-	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-		return userService.authenticateUser(loginRequest);
-	}
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+        return userService.authenticateUser(loginRequest);
+    }
 
-	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
-		return userService.registerUser(signUpRequest);
-	}
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+        return userService.registerUser(signUpRequest);
+    }
 
 }

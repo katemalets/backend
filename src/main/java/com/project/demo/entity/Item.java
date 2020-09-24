@@ -36,9 +36,9 @@ public class Item {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_item",
-    joinColumns = @JoinColumn(name = "item_id"),
-    inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> usersWhoLiked = new HashSet<>() ;
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> usersWhoLiked = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "item_tag",
@@ -51,7 +51,7 @@ public class Item {
     @JoinColumn(name = "item_id")
     private List<Comment> comments;
 
-    public Item(){
+    public Item() {
     }
 
     public Item(String name, String description, String imageURL) {
@@ -71,9 +71,9 @@ public class Item {
                 '}';
     }
 
-    public List<Long> getUsersWhoLikedIds(){
+    public List<Long> getUsersWhoLikedIds() {
         List<Long> usersWhoLikedIds = new ArrayList<>();
-        for(User user: usersWhoLiked){
+        for (User user : usersWhoLiked) {
             usersWhoLikedIds.add(user.getId());
         }
         return usersWhoLikedIds;
@@ -121,11 +121,11 @@ public class Item {
         this.tags = tags;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

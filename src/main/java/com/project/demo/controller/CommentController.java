@@ -16,7 +16,7 @@ public class CommentController {
     @PostMapping(path = {"/{itemId}/{userId}"})
     public Comment addComment(@RequestBody Comment comment,
                               @PathVariable("itemId") long itemId,
-                              @PathVariable("userId") long userId){
+                              @PathVariable("userId") long userId) {
         return commentService.addComment(comment, itemId, userId);
     }
 }

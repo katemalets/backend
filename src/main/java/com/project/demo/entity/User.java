@@ -7,8 +7,8 @@ import java.util.Set;
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
-@UniqueConstraint(columnNames = "username"),
-@UniqueConstraint(columnNames = "email")})
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")})
 public class User {
 
     @Id
@@ -24,7 +24,7 @@ public class User {
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(	name = "user_authority",
+    @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities = new HashSet<>();
@@ -35,7 +35,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Item> likedItems = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.MERGE,
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Collection> collections;
 
@@ -82,11 +82,11 @@ public class User {
                 '}';
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

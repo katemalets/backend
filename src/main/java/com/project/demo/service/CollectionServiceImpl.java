@@ -48,8 +48,8 @@ public class CollectionServiceImpl implements CollectionService {
     //toDo checkboxes!(instead of enabled)
     @Override
     public List<Collection> sortByItemsNumber(int amount) {
-        List<Collection> collections = findAll();
-        for(Collection collection: collections){
+        List<Collection> collections = collectionRepository.findAll();
+        for (Collection collection : collections) {
             Set<Item> items = collection.getItems();
             collection.setItemsNumber(items.size());
         }
@@ -66,8 +66,7 @@ public class CollectionServiceImpl implements CollectionService {
         Collection oldCollection = getCollection(collectionId);
         User user = userRepository.findById(userId).get();
         Collection newCollection = new Collection();
-        Long newCollectionId = (long) 0;
-        newCollection.setId(newCollectionId);
+        newCollection.setId(0);
         newCollection.setName(oldCollection.getName());
         newCollection.setTopic(oldCollection.getTopic());
         newCollection.setImageURL(oldCollection.getImageURL());
@@ -78,9 +77,9 @@ public class CollectionServiceImpl implements CollectionService {
         Set<Item> oldItems = oldCollection.getItems();
         Set<Item> newItems = new HashSet<>();
 
-        for(Item oldItem: oldItems){
+        for (Item oldItem : oldItems) {
             Item newItem = new Item();
-            newItem.setId((long) 0);
+            newItem.setId(0);
             newItem.setName(oldItem.getName());
             newItem.setDate(oldItem.getDate());
             newItem.setDescription(oldItem.getDescription());
@@ -88,7 +87,7 @@ public class CollectionServiceImpl implements CollectionService {
             newItem.setCollection(newCollection);
             Set<Tag> tags = oldItem.getTags();
             Set<Tag> newTags = new HashSet<>();
-            for(Tag tag: tags){
+            for (Tag tag : tags) {
                 newTags.add(tag);
                 System.out.println(tag.getName());
             }

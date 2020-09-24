@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -72,7 +71,6 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).get();
         user.setEnabled(false);
         userRepository.save(user);
-        System.out.println(user.isEnabled());
         return user;
     }
 
@@ -88,9 +86,8 @@ public class UserServiceImpl implements UserService {
     public User makeAdmin(long id) {
         User user = userRepository.findById(id).get();
         Set<Authority> authorities = user.getAuthorities();
-        for(Authority authority : authorities){
-            System.out.println(authority);
-            if(authority.getAuthority().equals(AuthorityEnum.ROLE_ADMIN)){
+        for (Authority authority : authorities) {
+            if (authority.getAuthority().equals(AuthorityEnum.ROLE_ADMIN)) {
                 break;
             } else {
                 authorities.add(authorityRepository.findByAuthority(AuthorityEnum.ROLE_ADMIN).get());
@@ -179,7 +176,7 @@ public class UserServiceImpl implements UserService {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: User is blocked"));
-        } catch (BadCredentialsException exception){
+        } catch (BadCredentialsException exception) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Incorrect password"));

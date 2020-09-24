@@ -26,7 +26,7 @@ public class Collection {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "collection", cascade = {CascadeType.DETACH, CascadeType.MERGE,
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "collection", cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Item> items;
 
@@ -43,7 +43,7 @@ public class Collection {
         this.description = description;
     }
 
-    public Collection(long id,String name, String topic, String imageURL, String description, User user, Set<Item> items, long itemsNumber) {
+    public Collection(long id, String name, String topic, String imageURL, String description, User user, Set<Item> items, long itemsNumber) {
         this.id = id;
         this.name = name;
         this.topic = topic;
@@ -87,11 +87,11 @@ public class Collection {
                 '}';
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

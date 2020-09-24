@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Authority {
 
     @Id
-    private Long id;
+    private long id;
 
     @Enumerated(EnumType.STRING)
     private AuthorityEnum authority;
@@ -19,11 +19,11 @@ public class Authority {
         this.authority = authority;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

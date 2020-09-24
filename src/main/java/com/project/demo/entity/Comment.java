@@ -21,7 +21,7 @@ public class Comment {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    public Comment(){
+    public Comment() {
 
     }
 
@@ -53,7 +53,7 @@ public class Comment {
         this.comment = comment;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return user.getUsername();
     }
 }

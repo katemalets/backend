@@ -1,13 +1,8 @@
 package com.project.demo.service;
 
+import com.project.demo.entity.*;
 import com.project.demo.entity.Collection;
-import com.project.demo.entity.Item;
-import com.project.demo.entity.Tag;
-import com.project.demo.entity.User;
-import com.project.demo.repository.CollectionRepository;
-import com.project.demo.repository.ItemRepository;
-import com.project.demo.repository.TagRepository;
-import com.project.demo.repository.UserRepository;
+import com.project.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,13 +37,13 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findAll();
     }
 
-    public List<Item> findItems(String name){
+    public List<Item> findItems(String name) {
         List<Item> searchedItems = new ArrayList<>();
         List<Item> itemsByName = itemRepository.findByNameContaining(name);
         List<Item> itemsByDescription = itemRepository.findByDescriptionContaining(name);
         List<Tag> tags = tagRepository.findByNameContaining(name);
         List<Item> itemsByTag = new ArrayList<>();
-        for(Tag currentTag: tags){
+        for (Tag currentTag : tags) {
             itemsByTag = tagService.findItemsByTagId(currentTag.getId());
         }
         searchedItems.addAll(itemsByName);
@@ -69,17 +64,17 @@ public class ItemServiceImpl implements ItemService {
         System.out.println(itemTags);
         Set<Tag> newTags = new HashSet<>();
 
-        for(Tag oldTag: itemTags){
+        for (Tag oldTag : itemTags) {
             boolean flagForAddingTag = true;
-            for(Tag currentTag: tags){
-                if(currentTag.getName().equals(oldTag.getName())){
+            for (Tag currentTag : tags) {
+                if (currentTag.getName().equals(oldTag.getName())) {
                     System.out.println("We have this item " + oldTag.getName());
                     newTags.add(currentTag);
                     flagForAddingTag = false;
                     break;
                 }
             }
-            if(flagForAddingTag){
+            if (flagForAddingTag) {
                 System.out.println("Adding new tag + " + oldTag.getName());
                 Tag newTag = new Tag();
                 newTag.setId(0);
@@ -96,7 +91,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item addItem(Item item, long collectionId) {
         Collection collection = collectionRepository.findById(collectionId).get();
-        item.setId((long) 0);
+        item.setId(0);
         item.setCollection(collection);
         item.setDate(System.currentTimeMillis());
         item.setLikesNumber(0);
@@ -116,7 +111,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> compareByDate(int amount) {
-        List<Item> items = findAll();
+        List<Item> items = itemRepository.findAll();
         Comparator<Item> compareByDate = ((o1, o2) -> (int) (o2.getDate() - o1.getDate()));
         items.sort(compareByDate);
         return items.stream().limit(amount).collect(Collectors.toList());
@@ -128,7 +123,7 @@ public class ItemServiceImpl implements ItemService {
         User user = userRepository.findById(userId).get();
         System.out.println("Users who liked: " + item.getUsersWhoLiked());
         System.out.println("did user like item? - " + item.getUsersWhoLiked().contains(user));
-        if(!item.getUsersWhoLiked().contains(user)){
+        if (!item.getUsersWhoLiked().contains(user)) {
             System.out.println(user);
             item.setLikesNumber(item.getLikesNumber() + 1);
             item.getUsersWhoLiked().add(user);
@@ -142,7 +137,7 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findById(itemId).get();
         User user = userRepository.findById(userId).get();
         System.out.println("did user like item? - " + item.getUsersWhoLiked().contains(user));
-        if(item.getUsersWhoLiked().contains(user)){
+        if (item.getUsersWhoLiked().contains(user)) {
             item.setLikesNumber(item.getLikesNumber() - 1);
             item.getUsersWhoLiked().remove(user);
         }

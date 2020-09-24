@@ -73,10 +73,10 @@ public class TagServiceImpl implements TagService {
         List<Item> items = itemRepository.findAll();
         List<Item> newItems = new ArrayList<>();
         Tag tag = tagRepository.findById(id).get();
-        for(Item item: items){
+        for (Item item : items) {
             Set<Tag> itemTags = item.getTags();
-            for(Tag currentTag: itemTags){
-                if(currentTag.getName().equals(tag.getName())){
+            for (Tag currentTag : itemTags) {
+                if (currentTag.getName().equals(tag.getName())) {
                     newItems.add(item);
                 }
             }
