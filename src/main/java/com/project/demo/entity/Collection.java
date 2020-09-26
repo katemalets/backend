@@ -62,6 +62,10 @@ public class Collection {
         return user.getId();
     }
 
+    public String getUsername(){
+        return user.getUsername();
+    }
+
     @JsonIgnore
     public void setUser(User user) {
         this.user = user;

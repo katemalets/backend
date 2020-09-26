@@ -20,9 +20,7 @@ public class AdminController {
     }
 
     @GetMapping(path = {"/{id}"})
-    public User showUser(@PathVariable("id") long id) {
-        return userService.getUser(id);
-    }
+    public User showUser(@PathVariable("id") long id) { return userService.getUser(id); }
 
     @DeleteMapping(path = {"/{id}"})
     public void deleteUser(@PathVariable("id") long id) {

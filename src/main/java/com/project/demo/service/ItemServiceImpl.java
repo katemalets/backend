@@ -91,7 +91,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item addItem(Item item, long collectionId) {
         Collection collection = collectionRepository.findById(collectionId).get();
-        item.setId(0);
+        item.setId((long) 0);
         item.setCollection(collection);
         item.setDate(System.currentTimeMillis());
         item.setLikesNumber(0);
@@ -101,6 +101,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItem(long id) {
+        Item item = itemRepository.findById(id).get();
+        System.out.println(item.toString());
         itemRepository.deleteById(id);
     }
 

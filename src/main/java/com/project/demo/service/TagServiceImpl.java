@@ -1,5 +1,6 @@
 package com.project.demo.service;
 
+import com.project.demo.entity.Collection;
 import com.project.demo.entity.Item;
 import com.project.demo.entity.Tag;
 import com.project.demo.repository.ItemRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +28,23 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<Tag> sortByItemsNumber() {
+//        List<Collection> collections = collectionRepository.findAll();
+//        for (Collection collection : collections) {
+//            Set<Item> items = collection.getItems();
+//            collection.setItemsNumber(items.size());
+//        }
+//
+//        Comparator<Collection> compareByItems =
+//                (o1, o2) -> (int) (o2.getItemsNumber() - o1.getItemsNumber());
+//        collections.sort(compareByItems);
+        List<Tag> tags = tagRepository.findAll();
+        Comparator<Tag> compareByItemsNumber = ((o1, o2) -> (int) (o2.getItemsNumber() - o1.getItemsNumber()));
+        tags.sort(compareByItemsNumber);
+        return tags;
+    }
+
+    @Override
     public Tag getTag(long id) {
         return tagRepository.findById(id).get();
     }
@@ -36,6 +55,10 @@ public class TagServiceImpl implements TagService {
         Item item = itemRepository.findById(itemId).get();
         Set<Tag> tags = item.getTags();
         tags.remove(deletedTag);
+        System.out.println("ItemsNumber for tag: " + deletedTag.getItemsNumber());
+        if(deletedTag.getItemsNumber() == 1){
+            tagRepository.delete(deletedTag);
+        }
         item.setTags(tags);
         itemRepository.save(item);
     }

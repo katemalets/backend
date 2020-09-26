@@ -26,9 +26,14 @@ public class TagController {
         return tagService.addTag(tag, itemId);
     }
 
+//    @GetMapping
+//    private List<Tag> getTags() {
+//        return tagService.findAll();
+//    }
+
     @GetMapping
-    private List<Tag> getTags() {
-        return tagService.findAll();
+    private List<Tag> getTopTags() {
+        return tagService.sortByItemsNumber();
     }
 
     @GetMapping("/{id}")

@@ -16,4 +16,6 @@ public interface TagService {
     Tag addTag(Tag tag, long itemId);
 
     List<Item> findItemsByTagId(long id);
+
+    List<Tag> sortByItemsNumber();
 }

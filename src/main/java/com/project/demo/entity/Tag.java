@@ -34,6 +34,10 @@ public class Tag {
         this.items = items;
     }
 
+    public long getItemsNumber(){
+        return items.size();
+    }
+
     public long getId() {
         return id;
     }
