@@ -16,7 +16,7 @@ public interface ItemService {
 
     void save(Item item);
 
-    List<Item> compareByDate(int amount);
+    List<Item> sortByDate(int amount);
 
     Item likeItem(long itemId, long userId);
 

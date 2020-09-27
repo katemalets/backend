@@ -101,57 +101,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<?> registerUser(SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
+            return ResponseEntity.badRequest()
                     .body(new MessageResponse("Error: Username is already taken"));
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
+            return ResponseEntity.badRequest()
                     .body(new MessageResponse("Error: Email is already in use"));
         }
 
-        User user = new User(signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
+        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
-
-        Set<String> strRoles = signUpRequest.getRole();
-        Set<Authority> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            Authority userRole = authorityRepository.findByAuthority(AuthorityEnum.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Authority adminRole = authorityRepository.findByAuthority(AuthorityEnum.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-                        roles.add(adminRole);
-
-                        break;
-                    default:
-                        Authority userRole = authorityRepository.findByAuthority(AuthorityEnum.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-                        roles.add(userRole);
-                }
-            });
-        }
-
+        Set<Authority> roles = setRoles();
         user.setAuthorities(roles);
         user.setEnabled(true);
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully"));
     }
 
+    private Set<Authority> setRoles(){
+        Set<Authority> roles = new HashSet<>();
+        Authority userRole = authorityRepository.findByAuthority(AuthorityEnum.ROLE_USER).get();
+        roles.add(userRole);
+        return roles;
+    }
+
     @Override
     public ResponseEntity<?> authenticateUser(LoginRequest loginRequest) {
 
         if (!userRepository.existsByUsername(loginRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
+            return ResponseEntity.badRequest()
                     .body(new MessageResponse("Error: Username with such name does not exist"));
         }
 

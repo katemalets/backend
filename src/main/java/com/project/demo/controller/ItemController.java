@@ -1,9 +1,7 @@
 package com.project.demo.controller;
 
-import com.project.demo.entity.Comment;
 import com.project.demo.entity.Item;
 import com.project.demo.service.CollectionService;
-import com.project.demo.service.CommentService;
 import com.project.demo.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +45,6 @@ public class ItemController {
 
     @DeleteMapping(path = {"/{id}"})
     public void deleteItem(@PathVariable("id") long id) {
-        System.out.println("Id of deleted item: " + id);
         itemService.deleteItem(id);
     }
 
@@ -68,6 +65,6 @@ public class ItemController {
 
     @GetMapping("/top/{amount}")
     private List<Item> getLastItems(@PathVariable int amount) {
-        return itemService.compareByDate(amount);
+        return itemService.sortByDate(amount);
     }
 }

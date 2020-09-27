@@ -25,6 +25,9 @@ public class ItemServiceImpl implements ItemService {
     private TagRepository tagRepository;
 
     @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
     private TagService tagService;
 
     @Override
@@ -54,44 +57,52 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item updateItem(long id, Item itemDetails) {
-        Item item = getItem(id);
+        Item item = updateItemFields(id, itemDetails);
+        itemRepository.save(item);
+        return item;
+    }
+
+    private Item updateItemFields(long id,Item itemDetails){
+        Item item = itemRepository.findById(id).get();
         item.setName(itemDetails.getName());
         item.setDescription(itemDetails.getDescription());
         item.setImageURL(itemDetails.getImageURL());
+        item.setTags(getOrCreateTags(itemDetails));
+        return item;
+    }
 
+    private Set<Tag> getOrCreateTags(Item itemDetails){
         List<Tag> tags = tagRepository.findAll();
         Set<Tag> itemTags = itemDetails.getTags();
-        System.out.println(itemTags);
         Set<Tag> newTags = new HashSet<>();
-
         for (Tag oldTag : itemTags) {
             boolean flagForAddingTag = true;
             for (Tag currentTag : tags) {
                 if (currentTag.getName().equals(oldTag.getName())) {
-                    System.out.println("We have this item " + oldTag.getName());
                     newTags.add(currentTag);
                     flagForAddingTag = false;
                     break;
                 }
             }
             if (flagForAddingTag) {
-                System.out.println("Adding new tag + " + oldTag.getName());
-                Tag newTag = new Tag();
-                newTag.setId(0);
-                newTag.setName(oldTag.getName());
-                newTags.add(newTag);
-                tagRepository.save(newTag);
+               addNewTag(newTags, oldTag);
             }
         }
-        item.setTags(newTags);
-        itemRepository.save(item);
-        return item;
+        return newTags;
+    }
+
+    private void addNewTag(Set<Tag> newTags,Tag oldTag ){
+        Tag newTag = new Tag();
+        newTag.setId(0);
+        newTag.setName(oldTag.getName());
+        newTags.add(newTag);
+        tagRepository.save(newTag);
     }
 
     @Override
     public Item addItem(Item item, long collectionId) {
         Collection collection = collectionRepository.findById(collectionId).get();
-        item.setId((long) 0);
+        item.setId(0);
         item.setCollection(collection);
         item.setDate(System.currentTimeMillis());
         item.setLikesNumber(0);
@@ -102,7 +113,14 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void deleteItem(long id) {
         Item item = itemRepository.findById(id).get();
-        System.out.println(item.toString());
+        List<Comment> comments = item.getComments();
+        commentRepository.deleteAll(comments);
+        Set<Tag> tags = item.getTags();
+        for(Tag tag: tags){
+            if(tag.getItemsNumber() == 1){
+                tagRepository.delete(tag);
+            }
+        }
         itemRepository.deleteById(id);
     }
 
@@ -112,7 +130,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> compareByDate(int amount) {
+    public List<Item> sortByDate(int amount) {
         List<Item> items = itemRepository.findAll();
         Comparator<Item> compareByDate = ((o1, o2) -> (int) (o2.getDate() - o1.getDate()));
         items.sort(compareByDate);
@@ -123,8 +141,6 @@ public class ItemServiceImpl implements ItemService {
     public Item likeItem(long itemId, long userId) {
         Item item = itemRepository.findById(itemId).get();
         User user = userRepository.findById(userId).get();
-        System.out.println("Users who liked: " + item.getUsersWhoLiked());
-        System.out.println("did user like item? - " + item.getUsersWhoLiked().contains(user));
         if (!item.getUsersWhoLiked().contains(user)) {
             System.out.println(user);
             item.setLikesNumber(item.getLikesNumber() + 1);
@@ -138,7 +154,6 @@ public class ItemServiceImpl implements ItemService {
     public Item dislikeItem(long itemId, long userId) {
         Item item = itemRepository.findById(itemId).get();
         User user = userRepository.findById(userId).get();
-        System.out.println("did user like item? - " + item.getUsersWhoLiked().contains(user));
         if (item.getUsersWhoLiked().contains(user)) {
             item.setLikesNumber(item.getLikesNumber() - 1);
             item.getUsersWhoLiked().remove(user);

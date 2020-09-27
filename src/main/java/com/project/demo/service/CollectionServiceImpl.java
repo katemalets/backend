@@ -45,7 +45,6 @@ public class CollectionServiceImpl implements CollectionService {
 
     //toDo from db(select from db(not working here)
     //toDo hibernate search(!!!findInfo!!!)
-    //toDo checkboxes!(instead of enabled)
     @Override
     public List<Collection> sortByItemsNumber(int amount) {
         List<Collection> collections = collectionRepository.findAll();
@@ -53,7 +52,6 @@ public class CollectionServiceImpl implements CollectionService {
             Set<Item> items = collection.getItems();
             collection.setItemsNumber(items.size());
         }
-
         Comparator<Collection> compareByItems =
                 (o1, o2) -> (int) (o2.getItemsNumber() - o1.getItemsNumber());
         collections.sort(compareByItems);
@@ -62,8 +60,15 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public Collection addCollection(long collectionId, long userId) {
+        Collection oldCollection = collectionRepository.findById(collectionId).get();
+        Collection newCollection = duplicateCollection(oldCollection, userId);
+        Set<Item> newItems = addItemsToCollection(oldCollection.getItems(), newCollection);
+        newCollection.setItems(newItems);
+        collectionRepository.save(newCollection);
+        return newCollection;
+    }
 
-        Collection oldCollection = getCollection(collectionId);
+    private Collection duplicateCollection(Collection oldCollection, long userId){
         User user = userRepository.findById(userId).get();
         Collection newCollection = new Collection();
         newCollection.setId(0);
@@ -73,10 +78,11 @@ public class CollectionServiceImpl implements CollectionService {
         newCollection.setDescription(oldCollection.getDescription());
         newCollection.setUser(user);
         newCollection.setItemsNumber(oldCollection.getItemsNumber());
+        return newCollection;
+    }
 
-        Set<Item> oldItems = oldCollection.getItems();
+    private Set<Item> addItemsToCollection(Set<Item> oldItems, Collection newCollection){
         Set<Item> newItems = new HashSet<>();
-
         for (Item oldItem : oldItems) {
             Item newItem = new Item();
             newItem.setId(0);
@@ -85,18 +91,16 @@ public class CollectionServiceImpl implements CollectionService {
             newItem.setDescription(oldItem.getDescription());
             newItem.setImageURL(oldItem.getImageURL());
             newItem.setCollection(newCollection);
-            Set<Tag> tags = oldItem.getTags();
-            Set<Tag> newTags = new HashSet<>();
-            for (Tag tag : tags) {
-                newTags.add(tag);
-                System.out.println(tag.getName());
-            }
-            newItem.setTags(newTags);
-            newItems.add(newItem);
+            addTagsToItem(oldItem.getTags(), newItem, newItems);
         }
-        newCollection.setItems(newItems);
-        collectionRepository.save(newCollection);
-        return newCollection;
+        return newItems;
+    }
+
+    private void addTagsToItem(Set<Tag> oldTags, Item newItem, Set<Item> newItems){
+        Set<Tag> newTags = new HashSet<>();
+        newTags.addAll(oldTags);
+        newItem.setTags(newTags);
+        newItems.add(newItem);
     }
 
     @Override

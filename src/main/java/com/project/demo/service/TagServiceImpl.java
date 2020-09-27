@@ -1,6 +1,5 @@
 package com.project.demo.service;
 
-import com.project.demo.entity.Collection;
 import com.project.demo.entity.Item;
 import com.project.demo.entity.Tag;
 import com.project.demo.repository.ItemRepository;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class TagServiceImpl implements TagService {
+public class  TagServiceImpl implements TagService {
 
     @Autowired
     private TagRepository tagRepository;
@@ -29,15 +28,6 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> sortByItemsNumber() {
-//        List<Collection> collections = collectionRepository.findAll();
-//        for (Collection collection : collections) {
-//            Set<Item> items = collection.getItems();
-//            collection.setItemsNumber(items.size());
-//        }
-//
-//        Comparator<Collection> compareByItems =
-//                (o1, o2) -> (int) (o2.getItemsNumber() - o1.getItemsNumber());
-//        collections.sort(compareByItems);
         List<Tag> tags = tagRepository.findAll();
         Comparator<Tag> compareByItemsNumber = ((o1, o2) -> (int) (o2.getItemsNumber() - o1.getItemsNumber()));
         tags.sort(compareByItemsNumber);
@@ -55,7 +45,6 @@ public class TagServiceImpl implements TagService {
         Item item = itemRepository.findById(itemId).get();
         Set<Tag> tags = item.getTags();
         tags.remove(deletedTag);
-        System.out.println("ItemsNumber for tag: " + deletedTag.getItemsNumber());
         if(deletedTag.getItemsNumber() == 1){
             tagRepository.delete(deletedTag);
         }
@@ -72,23 +61,25 @@ public class TagServiceImpl implements TagService {
         boolean flagForAddingTag = true;
         for (Tag currentTag : tags) {
             if (currentTag.getName().equals(tagDetails.getName())) {
-                System.out.println("We have this tag " + currentTag.getName());
                 itemTags.add(currentTag);
                 flagForAddingTag = false;
                 break;
             }
         }
         if (flagForAddingTag) {
-            Tag newTag = new Tag();
-            newTag.setId(0);
-            newTag.setName(tagDetails.getName());
-            itemTags.add(newTag);
-            tagRepository.save(newTag);
-            System.out.println("Adding new tag + " + newTag.getName());
+           addNewTag(tagDetails, itemTags);
         }
         item.setTags(itemTags);
         itemRepository.save(item);
         return null;
+    }
+
+    private void addNewTag(Tag tagDetails, Set<Tag> itemTags ){
+        Tag newTag = new Tag();
+        newTag.setId(0);
+        newTag.setName(tagDetails.getName());
+        itemTags.add(newTag);
+        tagRepository.save(newTag);
     }
 
     @Override

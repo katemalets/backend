@@ -5,8 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users",
-        uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
                 @UniqueConstraint(columnNames = "username"),
                 @UniqueConstraint(columnNames = "email")})
 public class User {
@@ -47,13 +46,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
-//    public User(long id,String username, String email, String password) {
-//        this.id = id;
-//        this.username = username;
-//        this.email = email;
-//        this.password = password;
-//    }
 
     public Set<Item> getLikedItems() {
         return likedItems;
